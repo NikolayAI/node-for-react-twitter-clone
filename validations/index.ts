@@ -1,0 +1,1 @@
+export { registerValidators } from './register';
