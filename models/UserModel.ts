@@ -1,7 +1,21 @@
-import { model, Schema } from 'mongoose';
+import { Document, model, Schema } from 'mongoose';
 
 
-const UserSchema = new Schema({
+export interface IUserModel {
+  email: string;
+  fullname: string;
+  username: string;
+  password: string;
+  confirmHash: string;
+  confirmed?: boolean;
+  location?: string;
+  about?: string;
+  website?: string;
+}
+
+type UserModelDocumentType = IUserModel & Document
+
+const UserSchema = new Schema<UserModelDocumentType>({
   email: {
     unique: true,
     required: true,
@@ -20,7 +34,7 @@ const UserSchema = new Schema({
     required: true,
     type: String,
   },
-  confirmed_hash: {
+  confirmHash: {
     required: true,
     type: String,
   },
@@ -33,4 +47,4 @@ const UserSchema = new Schema({
   website: String,
 });
 
-export const UserModel = model('User', UserSchema);
+export const UserModel = model<UserModelDocumentType>('User', UserSchema);
