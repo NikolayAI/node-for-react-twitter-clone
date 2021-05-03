@@ -33,10 +33,12 @@ const UserSchema = new Schema<UserModelDocumentType>({
   password: {
     required: true,
     type: String,
+    select: false,
   },
   confirmHash: {
     required: true,
     type: String,
+    select: false,
   },
   confirmed: {
     type: Boolean,
