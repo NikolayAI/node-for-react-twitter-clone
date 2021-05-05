@@ -1,8 +1,10 @@
 import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
+import { Strategy as JWTstrategy, ExtractJwt } from 'passport-jwt';
 
 import { UserModel } from '../models';
 import { generateMD5 } from '../utils/generateHash';
+import { IUserModel } from '../models/UserModel';
 
 
 passport.use(
@@ -27,7 +29,31 @@ passport.use(
         return done(error, false);
       }
     }
-  ));
+  )
+);
+
+passport.use(
+  new JWTstrategy(
+    {
+      secretOrKey: process.env.SECRET_KEY || '123',
+      jwtFromRequest: ExtractJwt.fromHeader('token'),
+    },
+    async (payload: { data: IUserModel }, done) => {
+      try {
+        const user = await UserModel.findById(payload.data._id).exec();
+
+        if (user) {
+          done(null, user);
+          return;
+        }
+
+        done(null, false);
+      } catch (error) {
+        done(error, false);
+      }
+    }
+  )
+);
 
 passport.serializeUser((user: any, done) => {
   done(null, user?._id);
@@ -35,7 +61,7 @@ passport.serializeUser((user: any, done) => {
 
 passport.deserializeUser((id, done) => {
   UserModel.findById(id, (err: any, user: any) => {
-    done(err, user);
+    done(err, user.toJSON());
   });
 });
 

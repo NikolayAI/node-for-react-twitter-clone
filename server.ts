@@ -1,6 +1,4 @@
 import dotenv from 'dotenv';
-
-
 dotenv.config();
 import express from 'express';
 
@@ -16,12 +14,11 @@ app.use(express.json());
 app.use(passport.initialize());
 
 app.get('/users', UserCtrl.index);
-app.get('/users/:id', registerValidators, UserCtrl.show);
+app.get('/users/me', passport.authenticate('jwt', {session: false}), UserCtrl.getUserInfo);
+app.get('/users/:id', UserCtrl.show);
 app.get('/auth/verify', registerValidators, UserCtrl.verify);
 app.post('/auth/register', registerValidators, UserCtrl.create);
-app.post('/auth/login', passport.authenticate('local'), (req, res) => {
-  res.json(req.user);
-});
+app.post('/auth/login', passport.authenticate('local'), UserCtrl.afterLogin);
 // app.patch('/users', UserCtrl.index);
 // app.delete('/users', UserCtrl.index);
 

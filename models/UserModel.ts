@@ -14,7 +14,7 @@ export interface IUserModel {
   website?: string;
 }
 
-type UserModelDocumentType = IUserModel & Document
+export type UserModelDocumentType = IUserModel & Document
 
 const UserSchema = new Schema<UserModelDocumentType>({
   email: {
