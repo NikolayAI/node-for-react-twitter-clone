@@ -13,6 +13,7 @@ const TweetSchema = new Schema<TweetModelDocumentType>({
   text: {
     required: true,
     type: String,
+    maxLength: 280,
   },
   user: {
     required: true,
@@ -21,4 +22,4 @@ const TweetSchema = new Schema<TweetModelDocumentType>({
   }
 });
 
-export const TweetModel = model<TweetModelDocumentType>('User', TweetSchema);
+export const TweetModel = model<TweetModelDocumentType>('Tweet', TweetSchema);

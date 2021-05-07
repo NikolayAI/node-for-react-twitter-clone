@@ -1,1 +1,2 @@
-export { UserCtrl } from './UserController'
+export { UserCtrl } from './UserController';
+export { TweetCtrl } from './TweetsController';
