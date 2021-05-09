@@ -1,12 +1,7 @@
 import express from 'express';
 import { validationResult } from 'express-validator';
 
-import {
-  ITweetModel,
-  IUserModel,
-  TweetModel,
-  UserModelDocumentType
-} from '../models';
+import { ITweetModel, TweetModel, UserModelDocumentType } from '../models';
 import { isValidObjectId } from '../utils';
 
 
@@ -39,7 +34,7 @@ class TweetsController {
       const tweet = await TweetModel.findById(tweetId).exec();
 
       if (!tweet) {
-        res.status(400).send();
+        res.status(404).send();
         return;
       }
 
@@ -57,7 +52,7 @@ class TweetsController {
 
   async create(req: express.Request, res: express.Response): Promise<void> {
     try {
-      const user = req.user as IUserModel;
+      const user = req.user as UserModelDocumentType;
 
       if (user?._id) {
         const errors = validationResult(req);
@@ -103,8 +98,12 @@ class TweetsController {
         const tweet = await TweetModel.findById(tweetId);
 
         if (tweet) {
-          tweet.remove();
-          res.send();
+          if (String(tweet.user._id) === String(user._id)) {
+            tweet.remove();
+            res.send();
+          } else {
+            res.status(403).send();
+          }
         } else {
           res.status(404).send();
         }
