@@ -11,16 +11,20 @@ export interface ITweetModel {
 export type TweetModelDocumentType = ITweetModel & Document
 
 const TweetSchema = new Schema<TweetModelDocumentType>({
-  text: {
-    required: true,
-    type: String,
-    maxLength: 280,
+    text: {
+      required: true,
+      type: String,
+      maxLength: 280,
+    },
+    user: {
+      required: true,
+      ref: 'User',
+      type: Schema.Types.ObjectId,
+    },
   },
-  user: {
-    required: true,
-    ref: 'User',
-    type: Schema.Types.ObjectId,
-  }
-});
+  {
+    timestamps: true
+  },
+);
 
 export const TweetModel = model<TweetModelDocumentType>('Tweet', TweetSchema);

@@ -115,6 +115,40 @@ class TweetsController {
       });
     }
   }
+
+  async update(req: express.Request, res: express.Response): Promise<void> {
+    try {
+      const user = req.user as UserModelDocumentType;
+
+      if (user) {
+        const tweetId = req.params.id;
+
+        if (!isValidObjectId(tweetId)) {
+          res.status(400).send();
+          return;
+        }
+
+        const tweet = await TweetModel.findById(tweetId);
+
+        if (tweet) {
+          if (String(tweet.user._id) === String(user._id)) {
+            tweet.text = req.body.text;
+            tweet.save();
+            res.send();
+          } else {
+            res.status(403).send();
+          }
+        } else {
+          res.status(404).send();
+        }
+      }
+    } catch (error) {
+      res.status(500).json({
+        status: 'error',
+        message: error,
+      });
+    }
+  }
 }
 
 export const TweetCtrl = new TweetsController();
