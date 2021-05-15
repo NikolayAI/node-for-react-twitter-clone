@@ -7,11 +7,11 @@ export const registerValidators = [
     .withMessage('Неверный E-Mail')
     .isLength({ min: 10, max: 40 })
     .withMessage('Количество символов в почте от 10 до 40'),
-  body('fullname', 'Введите имя')
+  body('fullName', 'Введите имя')
     .isString()
     .isLength({ min: 2, max: 40 })
     .withMessage('Количество символов в имени от 2 до 40'),
-  body('username', 'Введите логин')
+  body('userName', 'Введите логин')
     .isString()
     .isLength({ min: 2, max: 40 })
     .withMessage('Количество символов в логине от 2 до 40'),

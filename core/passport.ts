@@ -9,10 +9,10 @@ import { IUserModel } from '../models/UserModel';
 
 passport.use(
   new LocalStrategy(
-    async (username, password, done): Promise<void> => {
+    async (userName, password, done): Promise<void> => {
       try {
         const user = await UserModel
-          .findOne({ $or: [{ email: username }, { username }] })
+          .findOne({ $or: [{ email: userName }, { userName }] })
           .exec();
 
         if (!user) {

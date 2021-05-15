@@ -4,8 +4,8 @@ import { Document, model, Schema } from 'mongoose';
 export interface IUserModel {
   _id?: string;
   email: string;
-  fullname: string;
-  username: string;
+  fullName: string;
+  userName: string;
   password: string;
   confirmHash: string;
   confirmed?: boolean;
@@ -22,11 +22,11 @@ const UserSchema = new Schema<UserModelDocumentType>({
       required: true,
       type: String,
     },
-    fullname: {
+    fullName: {
       required: true,
       type: String,
     },
-    username: {
+    userName: {
       unique: true,
       required: true,
       type: String,
