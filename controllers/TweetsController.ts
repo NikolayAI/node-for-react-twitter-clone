@@ -8,7 +8,11 @@ import { isValidObjectId } from '../utils';
 class TweetsController {
   async index(_: unknown, res: express.Response): Promise<void> {
     try {
-      const tweets = await TweetModel.find({}).populate('user').exec();
+      const tweets = await TweetModel
+        .find({})
+        .populate('user')
+        .sort({'createdAt': '-1'})
+        .exec();
 
       res.json({
         status: 'success',
@@ -71,7 +75,7 @@ class TweetsController {
 
         res.json({
           status: 'success',
-          data: tweet,
+          data: await tweet.populate('user').execPopulate(),
         });
       }
 

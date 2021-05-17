@@ -29,5 +29,11 @@
     "start": "node dist/server.js",
     "dev": "ts-node ./server.ts",
     "nodemon": "nodemon"
+  },
+  "devDependencies": {
+    "@types/eslint": "^7.2.10",
+    "@typescript-eslint/eslint-plugin": "^4.23.0",
+    "@typescript-eslint/parser": "^4.23.0",
+    "eslint": "^7.26.0"
   }
 }

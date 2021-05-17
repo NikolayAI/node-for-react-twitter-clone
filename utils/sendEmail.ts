@@ -17,7 +17,7 @@ export const sendEmail = (
     html,
   }: ISendEmail,
   callback?: (err: Error | null, info: SentMessageInfo) => void,
-) => {
+): void => {
   mailer.sendMail(
     {
       from: emailFrom,

@@ -53,7 +53,7 @@ class UserController {
 
   async create(req: express.Request, res: express.Response): Promise<void> {
     try {
-      const errors = validationResult(req);
+      const errors = validationResult(req)
 
       if (!errors.isEmpty()) {
         res.status(400).json({ status: 'error', errors: errors.array() });
