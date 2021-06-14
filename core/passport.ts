@@ -1,11 +1,9 @@
 import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
-import { Strategy as JWTstrategy, ExtractJwt } from 'passport-jwt';
+import { ExtractJwt, Strategy as JWTstrategy } from 'passport-jwt';
 
-import { UserModel } from '../models';
-import { generateMD5 } from '../utils/generateHash';
-import { IUserModel } from '../models/UserModel';
-
+import { IUserModel, UserModel } from '../models';
+import { generateMD5 } from '../utils';
 
 passport.use(
   new LocalStrategy(
@@ -16,10 +14,14 @@ passport.use(
           .exec();
 
         if (!user) {
+          console.log('bad request');
           return done(null, false);
         }
 
-        if (user.password === generateMD5(password + process.env.SECRET_KEY)) {
+        if (
+          user.confirmed
+          && user.password === generateMD5(password + process.env.SECRET_KEY)
+        ) {
           done(null, user);
         } else {
           done(null, false);
