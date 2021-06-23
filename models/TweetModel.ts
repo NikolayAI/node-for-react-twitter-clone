@@ -1,7 +1,6 @@
 import { Document, model, Schema } from 'mongoose';
 import { IUserModel } from './UserModel';
 
-
 export interface ITweetModel {
   _id?: string;
   text: string;
@@ -21,6 +20,7 @@ const TweetSchema = new Schema<TweetModelDocumentType>({
       ref: 'User',
       type: Schema.Types.ObjectId,
     },
+    images: [{ type: String }],
   },
   {
     timestamps: true
