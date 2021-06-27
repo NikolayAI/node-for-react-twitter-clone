@@ -31,7 +31,7 @@ app.get('/auth/verify', registerValidators, UserCtrl.verify);
 app.post('/auth/register', registerValidators, UserCtrl.create);
 app.post('/auth/login', passport.authenticate('local'), UserCtrl.afterLogin);
 
-app.post('/upload', upload.single('avatar'), UploadFileCtrl.upload);
+app.post('/upload', upload.single('image'), UploadFileCtrl.upload);
 
 app.listen(process.env.PORT, (): void => {
   console.log(`SERVER RUNNING! PORT: ${process.env.PORT}`);

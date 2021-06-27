@@ -65,9 +65,10 @@ class TweetsController {
           res.status(400).json({ status: 'error', message: errors.array() });
           return;
         }
-
-        const data: ITweetModel = {
+        // ITweetModel
+        const data: any = {
           text: req.body.text,
+          images: req.body.images,
           user: user._id,
         };
 

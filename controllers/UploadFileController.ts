@@ -4,9 +4,10 @@ import cloudinary from '../core/cloudinary';
 class UploadFileController {
   async upload(req: express.Request, res: express.Response): Promise<void> {
     const file = req.file;
+    const timestamp = Math.round(new Date().getMilliseconds() /1000);
 
     await cloudinary.v2.uploader
-      .upload_stream({ resource_type: 'auto' }, (error, result) => {
+      .upload_stream({ resource_type: 'auto', timestamp }, (error, result) => {
         if (error || !result) {
           return res.status(500).json({
             status: 'error',

@@ -5,6 +5,7 @@ export interface ITweetModel {
   _id?: string;
   text: string;
   user: IUserModel;
+  images?: string[],
 }
 
 export type TweetModelDocumentType = ITweetModel & Document
